@@ -1,0 +1,31 @@
+<mat-card class="cosa-card">
+
+    <div mat-card-image>
+        <img [src]="producto.rutaPortada " alt="">
+    </div>
+
+    <mat-card-content>
+
+        <h1>
+            <a [routerLink]="['/producto', producto.slug]">
+                            {{producto.nombre}}
+                        </a>
+        </h1>
+
+        <p>
+            {{producto.descripcion | slice:0:100}}...
+        </p>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button (click)="agregarProductoAlCarrito()" color="primary" class="w-100" *ngIf="!productoYaExisteEnCarrito(); else removerCarrito">
+                        <mat-icon>add_shopping_cart</mat-icon>Agregar al Carrito
+                    </button>
+
+        <ng-template #removerCarrito>
+            <button mat-raised-button (click)="removerProductoDelCarrito()" color="warn" class="w-100">
+                        <mat-icon>remove_shopping_cart</mat-icon>Remover del Carrito
+                    </button>
+        </ng-template>
+
+    </mat-card-actions>
+</mat-card>

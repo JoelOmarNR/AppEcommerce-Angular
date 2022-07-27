@@ -1,0 +1,19 @@
+<div class="banner">
+    <div class="overlay"></div>
+    <div class="text">
+        <h1 class="title">Mi Tienda Online</h1>
+        <p class="subtitle">
+            Encuentra los últimos productos de tu preferencia para ti y comienza a comprar sin límites.
+        </p>
+    </div>
+</div>
+<div class="container mt-5">
+    <h1 class="fw-bold">Últimos productos</h1>
+    <div class="row">
+        <div class="col-md-4 mb-3" *ngFor="let producto of ultimosProductos">
+
+            <app-tarjeta-producto [producto]="producto"></app-tarjeta-producto>
+
+        </div>
+    </div>
+</div>

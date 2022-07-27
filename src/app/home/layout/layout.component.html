@@ -1,0 +1,44 @@
+<mat-toolbar>
+    <span>Mi Tienda Online</span>
+
+    <button mat-button routerLink="/" class="ms-3">Inicio</button>
+    <button mat-button routerLink="/productos" class="ms-2">Productos</button>
+    <button mat-button routerLink="/admin/productos" class="ms-2">
+    Administración
+  </button>
+
+    <!-- This fills the remaining space of the current row -->
+    <span class="spacer"></span>
+
+    <button mat-button [matMenuTriggerFor]="menuCarrito" [matBadge]="items.length">
+    <mat-icon>shopping_cart</mat-icon>
+  </button>
+    <mat-menu #menuCarrito="matMenu">
+        <ng-container *ngIf="items.length > 0; else sinItems">
+            <button mat-menu-item *ngFor="let item of items" [routerLink]="['/productos', item.slug]" class="carrito.item">
+        <div class="d-flex gap-3">
+          <img [src]="item.rutaPortada" alt="" height="64" />
+          <div class="info">
+            <div class="fw-bold mb-1">{{ item.nombre }}</div>
+            <div>{{ item.marca }}</div>
+            <div>{{ item.precio | currency: "$" }}</div>
+          </div>
+        </div>
+      </button>
+
+            <button mat-menu-item routerLink="/carrito" class="text-center">
+        Ir al carrito
+      </button>
+        </ng-container>
+
+        <ng-template #sinItems>
+            <button mat-menu-item class="text-center">El carrito está vacío</button>
+        </ng-template>
+    </mat-menu>
+
+    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+    <mat-icon>account_circle</mat-icon>Joel
+  </button>
+</mat-toolbar>
+
+<router-outlet></router-outlet>

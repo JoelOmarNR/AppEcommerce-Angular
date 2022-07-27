@@ -1,0 +1,156 @@
+<div *ngIf="formulario">
+    <h1>{{ producto ? 'Editar' : 'Nuevo' }} producto</h1>
+
+    <div class="mt-5 alert alert-danger" *ngIf="errors">
+        {{ errors | json }}
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+
+            <form class="mt-5" [formGroup]="formulario" (ngSubmit)="save()" autocomplete="off">
+
+                <mat-form-field appearance="outline" class="mb-2 d-block">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput type="text" placeholder="Nombre" formControlName="nombre" (keyup)="buildSlug()">
+                    <mat-error>
+                        <ng-container *ngIf="controlHasError('nombre', 'required')">
+                            Este campo es obligatorio
+                        </ng-container>
+                        <ng-container *ngIf="controlHasError('nombre', 'minlength')">
+                            Debe tener al menos 3 caracteres
+                        </ng-container>
+                        <ng-container *ngIf="controlHasError('nombre', 'maxlength')">
+                            Debe tener 100 caracteres como máximo
+                        </ng-container>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="mb-2 d-block">
+                    <mat-label>Slug</mat-label>
+                    <input matInput type="text" placeholder="Slug" formControlName="slug">
+                    <mat-error>
+                        <ng-container *ngIf="controlHasError('slug', 'required')">
+                            Este campo es obligatorio
+                        </ng-container>
+                        <ng-container *ngIf="controlHasError('slug', 'pattern')">
+                            El valor es inválido
+                        </ng-container>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="mb-2 d-block">
+                    <mat-label>Marca</mat-label>
+                    <input matInput placeholder="Marca" formControlName="marca">
+                    <mat-error>
+                        <ng-container *ngIf="controlHasError('marca', 'required')">
+                            Este campo es obligatorio
+                        </ng-container>
+                        <ng-container *ngIf="errors?.marca.length">
+                            {{ errors.marca[0].message }}
+                        </ng-container>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="mb-2 d-block">
+                    <mat-label for="descripcion">Descripción</mat-label>
+                    <textarea matInput placeholder="Descripción" formControlName="descripcion"></textarea>
+                    <mat-error>
+                        <ng-container *ngIf="controlHasError('descripcion', 'required')">
+                            Este campo es obligatorio
+                        </ng-container>
+                        <ng-container *ngIf="errors?.descripcion.length">
+                            {{ errors.descripcion[0].message }}
+                        </ng-container>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="mb-2 d-block">
+                    <mat-label>Stock</mat-label>
+                    <input matInput type="number" step="0.01" placeholder="Stock" formControlName="stock">
+                    <mat-error>
+                        <ng-container *ngIf="controlHasError('stock', 'required')">
+                            Este campo es obligatorio
+                        </ng-container>
+                        <ng-container *ngIf="controlHasError('stock', 'min')">
+                            El valor debe ser 0 como mínimo
+                        </ng-container>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="mb-2 d-block">
+                    <mat-label>Precio</mat-label>
+                    <input matInput type="number" step="0.01" placeholder="Precio" formControlName="precio">
+                    <mat-error>
+                        <ng-container *ngIf="controlHasError('precio', 'required')">
+                            Este campo es obligatorio
+                        </ng-container>
+                        <ng-container *ngIf="controlHasError('precio', 'min')">
+                            El valor debe ser 0 como mínimo
+                        </ng-container>
+                    </mat-error>
+                </mat-form-field>
+
+                <div class="mb-3">
+                    <label class="d-block mb-1">Archivo PDF</label>
+                    <button type="button" mat-raised-button (click)="rutaArchivoInputFile.click()">
+            Seleccionar Archivo
+        </button>
+
+                    <div *ngIf="formulario.controls['rutaArchivo'].valid">
+                        El archivo a sido subido:{{formulario.controls['rutaArchivo'].value}}
+                    </div>
+                    <mat-error *ngIf="controlHasError('rutaArchivo', 'required') && formulario.controls['rutaArchivo']  && formulario.controls['rutaArchivo'].touched">
+                        Este campo es obligatorio
+                    </mat-error>
+
+                    <input type="file" accept="application/pdf" (change)="uploadFile($event,'rutaArchivo')" class="d-none" #rutaArchivoInputFile>
+
+                </div>
+
+
+                <div class="mb-3">
+                    <label class="d-block mb-1">Portada</label>
+                    <button type="button" mat-raised-button (click)="rutaPortadaInputFile.click()">
+            Seleccionar Archivo
+        </button>
+
+                    <div *ngIf="formulario.controls['rutaPortada'].valid">
+                        El archivo a sido subido:{{formulario.controls['rutaPortada'].value}}
+                    </div>
+                    <mat-error *ngIf="controlHasError('rutaPortada', 'required') && formulario.controls['rutaPortada']  && formulario.controls['rutaPortada'].touched">
+                        Este campo es obligatorio
+                    </mat-error>
+
+                    <input type="file" accept="image/*" (change)="uploadFile($event,'rutaPortada')" class="d-none" #rutaPortadaInputFile>
+
+                </div>
+
+
+                <div class="text-end">
+                    <button mat-button type="button" routerLink="/admin/productos">
+                Cancelar
+            </button>
+                    <button class="ms-2" mat-raised-button color="primary">
+                {{ producto ? 'Actualizar' : 'Crear' }} producto
+            </button>
+                </div>
+            </form>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <img [src]="formulario.controls['rutaPortada'].value | apiImg" alt="" class="img-thumbnail" *ngIf="formulario.controls['rutaPortada'].value; else sinPortada">
+
+            <ng-template #sinPortada>
+                <div class="text-secondary text-center">
+                    Sin Portada
+                </div>
+            </ng-template>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,27 @@
+<mat-toolbar color="primary">
+    <span>Panel Administrativo</span>
+
+    <button mat-button routerLink="/" class="ms-3">
+        Inicio
+    </button>
+    <button mat-button routerLink="/admin/productos" class="ms-2">
+        Productos
+    </button>
+
+    <!-- This fills the remaining space of the current row -->
+    <span class="spacer"></span>
+    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+       <mat-icon>account_circle</mat-icon>Joel
+    </button>
+
+</mat-toolbar>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+
+            <router-outlet></router-outlet>
+
+        </div>
+    </div>
+</div>

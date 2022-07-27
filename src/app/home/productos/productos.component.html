@@ -1,0 +1,11 @@
+<div class="container mt-5">
+    <h1 class="fw-bold">Todos nuestros productos</h1>
+
+    <div infiniteScroll (scrolled)="cargarMasProductos()">
+        <div class="row">
+            <div class="col-md-4 mb-3" *ngFor="let producto of productos">
+                <app-tarjeta-producto [producto]="producto"></app-tarjeta-producto>
+            </div>
+        </div>
+    </div>
+</div>
