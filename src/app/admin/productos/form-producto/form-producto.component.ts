@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Producto } from '../shared/producto.model';
 import { ProductoService } from '../shared/producto.service';
@@ -10,13 +10,13 @@ import { ProductoService } from '../shared/producto.service';
   styles: [],
 })
 export class FormProductoComponent implements OnInit {
-  formulario?: FormGroup;
+  formulario?: UntypedFormGroup;
   errors: any;
   producto?: Producto;
 
   constructor(
     private productoService: ProductoService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router
   ) {}
