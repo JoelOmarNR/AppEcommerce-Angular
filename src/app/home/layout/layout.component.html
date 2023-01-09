@@ -17,7 +17,7 @@
         <ng-container *ngIf="items.length > 0; else sinItems">
             <button mat-menu-item *ngFor="let item of items" [routerLink]="['/productos', item.slug]" class="carrito.item">
         <div class="d-flex gap-3">
-          <img [src]="item.rutaPortada" alt="" height="64" />
+          <img [src]="item.rutaPortada | apiImg" alt="" height="64" />
           <div class="info">
             <div class="fw-bold mb-1">{{ item.nombre }}</div>
             <div>{{ item.marca }}</div>
@@ -36,9 +36,25 @@
         </ng-template>
     </mat-menu>
 
-    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-    <mat-icon>account_circle</mat-icon>Joel
-  </button>
+    <ng-container *ngIf="isLoggedIn(); else authButtons">
+        <button mat-button [matMenuTriggerFor]="userMenu">
+      <mat-icon>account_circle</mat-icon> {{ name }}
+    </button>
+
+        <mat-menu #userMenu="matMenu">
+            <button mat-menu-item (click)="logout()">
+        <mat-icon>logout</mat-icon> Cerrar sesión
+      </button>
+        </mat-menu>
+    </ng-container>
+
+    <ng-template #authButtons>
+        <button mat-button routerLink="/auth/login">Iniciar sesión</button>
+
+        <button mat-raised-button color="primary" routerLink="/auth/registro" class="ms-2">
+      Registrarme
+    </button>
+    </ng-template>
 </mat-toolbar>
 
 <router-outlet></router-outlet>

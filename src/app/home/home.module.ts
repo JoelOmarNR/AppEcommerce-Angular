@@ -8,6 +8,9 @@ import { SharedModule } from '../shared/shared.module';
 import { TarjetaProductoComponent } from './shared/tarjeta-producto/tarjeta-producto.component';
 import { ProductosComponent } from './productos/productos.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { DetallesProductoComponent } from './shared/detalles-producto/detalles-producto.component';
+import { CarritoComponent } from './carrito/carrito.component';
+import { DetallesVentaComponent } from './detalles-venta/detalles-venta.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +18,9 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     IndexComponent,
     TarjetaProductoComponent,
     ProductosComponent,
+    DetallesProductoComponent,
+    CarritoComponent,
+    DetallesVentaComponent,
   ],
   imports: [
     CommonModule,

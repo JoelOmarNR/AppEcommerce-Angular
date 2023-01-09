@@ -1,14 +1,14 @@
 export interface ProductoPage {
   content: Producto[];
   pageable: Pageable;
-  totalElements: number;
-  totalPages: number;
   last: boolean;
+  totalPages: number;
+  totalElements: number;
   size: number;
   number: number;
   sort: Sort;
-  numberOfElements: number;
   first: boolean;
+  numberOfElements: number;
   empty: boolean;
 }
 
@@ -18,12 +18,12 @@ export interface Producto {
   slug: string;
   marca: string;
   descripcion: string;
-  rutaPortada: null;
-  rutaArchivo: null;
+  rutaPortada: string;
+  rutaArchivo: string;
   stock: number;
   precio: number;
   fechaCreacion: Date;
-  fechaActualizacion: null;
+  fechaActualizacion: Date | null;
 }
 
 export interface Pageable {

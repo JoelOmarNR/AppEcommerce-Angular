@@ -1,0 +1,32 @@
+<div class="container" *ngIf="producto">
+    <div class="row">
+        <div class="col-md-6">
+            <img [src]="producto.rutaPortada | apiImg" alt="" class="w-100" />
+        </div>
+        <div class="col-md-6">
+            <h1 class="fw-bold">{{ producto.nombre }}</h1>
+            <p>
+                {{ producto.descripcion }}
+            </p>
+            <div>
+                <span class="fw-bold">Formato disponible:</span>
+                <span class="ms-1">PDF</span>
+            </div>
+            <div class="mt-2">
+                <span class="fw-bold">Precio:</span>
+                <span class="ms-1 fw-bold text-danger display-5">
+          {{ producto.precio | currency: "$" }}
+        </span>
+            </div>
+            <button mat-raised-button (click)="agregarProductoAlCarrito()" color="primary" *ngIf="!productoYaExisteEnCarrito(); else removerCarrito">
+        <mat-icon>add_shopping_cart</mat-icon>Agregar al Carrito
+      </button>
+
+            <ng-template #removerCarrito>
+                <button mat-raised-button (click)="removerProductoDelCarrito()" color="warn">
+          <mat-icon>remove_shopping_cart</mat-icon>Remover del Carrito
+        </button>
+            </ng-template>
+        </div>
+    </div>
+</div>
